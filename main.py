@@ -1,4 +1,5 @@
 """Run the whole bot"""
+
 from Bot.bot import core
 from Bot.config import Configuration
 from Bot.logger import setup_logging
@@ -15,7 +16,7 @@ def main():
     logger = setup_logging(Configuration.LOG_LEVEL)
     bot = core(settings, logger)
 
-    bot.run(Configuration.TOKEN)
+    bot.run(Configuration.TOKEN, log_handler=None)
 
 if __name__ == "__main__":
     main()
