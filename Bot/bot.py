@@ -66,10 +66,7 @@ class core(commands.Bot):
         self.logger.info(f"Ready as: {self.user} ID: {self.user.id}")
         
     async def close(self):
-        try:
-            if self.session == True and self.session.close != True:
-                await self.session.close()
-        except Exception as e:
-            self.logger.info(f"Cannot close the bot: {e}")
-                
+        if self.session is not None and not self.session.closed:
+            await self.session.close()
+
         await super().close()
