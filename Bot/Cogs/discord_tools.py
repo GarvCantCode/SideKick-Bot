@@ -1,11 +1,10 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
-import psutil
 import discord
+import psutil
 from discord import app_commands
 from discord.ext import commands
-
-
+from discord import SelectOption
 class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -27,10 +26,17 @@ class DiscordTools(commands.Cog):
         cpu_header = psutil.cpu_percent(1) # cpu blocking call to retrive cpu info
         ram_header = psutil.virtual_memory()
         
-        msg = f"CPU Usage: {cpu_header}%\nRAM Usage: {ram_header}%\n Uptime: {days}d {hours}h {minutes}m {seconds}s"
+        msg = f"CPU Usage: **{cpu_header}**%\nRAM Usage: **{ram_header.percent}**%\n Uptime: **{days}d {hours}h {minutes}m {seconds}s**"
         await ctx.response.send_message(msg)
         
-    
+    @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
+    async def timestamp(self, ctx: discord.Interaction, style: str):
+        now =  datetime.now(timezone.utc)
+        stamp = discord.utils.format_dt(now, style=style)
+        
+        msg = f'Timestamp: **{stamp}**'
+        await ctx.response.send_message(msg)
+        
         
 async def setup(bot):
     await bot.add_cog(DiscordTools(bot))
