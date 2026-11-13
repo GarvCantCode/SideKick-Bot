@@ -18,7 +18,16 @@ class Sidekicktree(app_commands.CommandTree):
             allowed_contexts=app_commands.AppCommandContext(guild=True, dm_channel=True, private_channel=True),
             allowed_installs=app_commands.AppInstallationType(guild=False, user=True)
             )
-    
+        
+    async def on_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+        if isinstance(error, app_commands.CommandInvokeError): # unwrap the error
+            error = error.original
+            
+        command = interaction.command.qualified_name
+        self.client.logger.error(f"Error in command {command}: {type(error).__name__}")
+        msg = f"An error occured: {type(error).__name__}"
+        
+        await interaction.send(msg, ephemeral=True)
 class core(commands.Bot):
     def __init__(self, settings, logger):
         super().__init__(
@@ -46,10 +55,9 @@ class core(commands.Bot):
             try:
                 await self.load_extension(extention)
                 self.logger.info(f"Loaded extention '{extention}'")
-            except commands.ExtensionError as e:
-                exception = f"{type(e).__name__}: {e}"
+            except commands.ExtensionError:
                 self.logger.exception(
-                    f"Failed to load extention {extention}\n{exception}"
+                    f"Failed to load extention {extention}\n"
                 )
 
     async def setup_hook(self):
