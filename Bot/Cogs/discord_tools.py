@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timezone
 
 import discord
 import psutil
@@ -32,7 +32,7 @@ class DiscordTools(commands.Cog):
         
     @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
     async def timestamp(self, ctx: discord.Interaction, style: str):
-        now =  datetime.now(datetime.UTC)
+        now =  datetime.now(timezone.utc)
         stamp = discord.utils.format_dt(now, style=style)
         
         msg = f'Timestamp: **{stamp}**'

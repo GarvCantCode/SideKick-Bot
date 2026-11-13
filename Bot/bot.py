@@ -27,7 +27,15 @@ class Sidekicktree(app_commands.CommandTree):
         self.client.logger.error(f"Error in command {command}: {type(error).__name__}")
         msg = f"An error occured: {type(error).__name__}"
         
-        await interaction.send(msg, ephemeral=True)
+        # i totally understand what is happening
+        try:
+            if interaction.response.is_done():
+                await interaction.followup.send(msg, ephemeral=True)
+            else:
+                await interaction.response.send_message(msg, ephemeral=True)
+        except discord.HTTPException:
+            pass
+        
 class core(commands.Bot):
     def __init__(self, settings, logger):
         super().__init__(
