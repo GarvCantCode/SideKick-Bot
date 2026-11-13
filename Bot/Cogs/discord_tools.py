@@ -1,14 +1,15 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import discord
 import psutil
 from discord import app_commands
 from discord.ext import commands
-from discord import SelectOption
+
+
 class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.launch_time = datetime.utcnow()
+        self.bot.launch_time = datetime.now(UTC)
 
     @app_commands.command(name="ping", description="Gives the bot latency")
     async def ping(self, ctx: discord.Interaction):
@@ -18,7 +19,7 @@ class DiscordTools(commands.Cog):
         
     @app_commands.command(name="stats", description="Shows bot statistics")
     async def stats(self, ctx: discord.Interaction):
-        uptime = datetime.utcnow() - self.bot.launch_time
+        uptime = datetime.now(UTC) - self.bot.launch_time
         days, remainder = divmod(int(uptime.total_seconds()), 86400)
         hours, remainder = divmod(remainder, 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -31,7 +32,7 @@ class DiscordTools(commands.Cog):
         
     @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
     async def timestamp(self, ctx: discord.Interaction, style: str):
-        now =  datetime.now(timezone.utc)
+        now =  datetime.now(datetime.UTC)
         stamp = discord.utils.format_dt(now, style=style)
         
         msg = f'Timestamp: **{stamp}**'
