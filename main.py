@@ -1,8 +1,8 @@
 """Run the whole bot"""
 
-from Bot.bot import core
-from Bot.config import Configuration
-from Bot.logger import setup_logging
+from bot.bot import core
+from bot.config import Configuration
+from bot.logger import setup_logging
 
 
 def main():

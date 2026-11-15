@@ -23,6 +23,7 @@ class Fun(commands.Cog):
     async def zalgo(self, ctx: discord.Interaction, text: app_commands.Range[str, 1, 250], intensity: app_commands.Range[int, 1, 10]):
         msg = self.make_zalgo(text=text, intensity=intensity)
         await ctx.response.send_message(msg)
-        
+    
+    
 async def setup(bot):
     await bot.add_cog(Fun(bot))
