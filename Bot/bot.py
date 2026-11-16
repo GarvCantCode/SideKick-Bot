@@ -24,7 +24,7 @@ class Sidekicktree(app_commands.CommandTree):
             error = error.original
             
         command = interaction.command.qualified_name
-        self.client.logger.error(f"Error in command {command}: {type(error).__name__}")
+        self.client.logger.error(f"Error in command {command}: {error}")
         msg = f"An error occured: {type(error).__name__}"
         
         # i totally understand what is happening
