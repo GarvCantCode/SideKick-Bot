@@ -33,9 +33,9 @@ class Research(commands.Cog):
                 async with self.bot.session.get(url) as resp:
                     if resp.status == 200:
                         data_weather = await resp.json()
-                        msg = f"{city}: **{data_weather['temprature_2m']}**°C, feels like **{data_weather['apparent_temperature']}°C**"
+                        msg = f"{city}: **{data_weather['current']['temperature_2m']}**°C, feels like **{data_weather['current']['apparent_temperature']}°C**"
                         await ctx.response.send_message(msg)
-                    elif response.status == 404:
+                    elif resp.status == 404:
                         await ctx.response.send_message(f"No information found for **{city}**.")
                     else:
                         await ctx.response.send_message(f"Failed to fetch the information for **{city}**.")
