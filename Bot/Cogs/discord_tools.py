@@ -1,4 +1,4 @@
-from datetime import UTC, datetime, timezone
+from datetime import UTC, datetime
 
 import discord
 import psutil
@@ -24,15 +24,15 @@ class DiscordTools(commands.Cog):
         hours, remainder = divmod(remainder, 3600)
         minutes, seconds = divmod(remainder, 60)
         
-        cpu_header = psutil.cpu_percent(1) # cpu blocking call to retrive cpu info
+        cpu_header = psutil.cpu_percent(interval=0) # async cpu blocking call to retrive cpu info
         ram_header = psutil.virtual_memory()
         
-        msg = f"CPU Usage: **{cpu_header}**%\nRAM Usage: **{ram_header.percent}**%\n Uptime: **{days}d {hours}h {minutes}m {seconds}s**"
+        msg = f"CPU Usage: **{cpu_header}**%\nRAM Usage: **{ram_header.percent}**%\nUptime: **{days}d {hours}h {minutes}m {seconds}s**"
         await ctx.response.send_message(msg)
         
     @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
     async def timestamp(self, ctx: discord.Interaction, style: str):
-        now =  datetime.now(timezone.utc)
+        now =  datetime.now(UTC)
         stamp = discord.utils.format_dt(now, style=style)
         
         msg = f'Timestamp: **{stamp}**'
