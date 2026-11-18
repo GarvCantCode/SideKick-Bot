@@ -38,7 +38,6 @@ class DiscordTools(commands.Cog):
         msg = f'Timestamp: **{stamp}**'
         await ctx.response.send_message(msg)
         
-
         
         
 async def setup(bot):
