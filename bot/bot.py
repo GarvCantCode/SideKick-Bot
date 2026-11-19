@@ -8,8 +8,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-COGS_DIR = Path(__file__).resolve().parent / "Cogs"
-COGS_PACKAGE = f"{__package__}.Cogs"
+COGS_DIR = Path(__file__).resolve().parent / "cogs"
+COGS_PACKAGE = f"{__package__}.cogs"
 
 class Sidekicktree(app_commands.CommandTree):
     def __init__(self, client):

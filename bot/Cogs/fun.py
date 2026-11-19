@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from bot.Lib.text import make_zalgo
+from bot.lib.text import make_zalgo
 
 
 class Fun(commands.Cog):
@@ -15,5 +15,5 @@ class Fun(commands.Cog):
         await ctx.response.send_message(msg)
     
     
-async def setup(bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(Fun(bot))

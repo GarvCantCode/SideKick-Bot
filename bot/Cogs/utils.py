@@ -17,5 +17,5 @@ class Utils(commands.Cog):
         msg = f'{msgf} **{stamp}**'
         await ctx.response.send_message(msg)
         
-async def setup(bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(Utils(bot))
