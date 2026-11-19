@@ -21,14 +21,6 @@ class DiscordTools(commands.Cog):
         msg = f"Pong: **{latency} ms** · up **{days}d {hours}h {minutes}m {seconds}s**"
         await ctx.response.send_message(msg)
         
-    @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
-    async def timestamp(self, ctx: discord.Interaction,msgf: str, style: str):
-        now =  datetime.now(UTC)
-        stamp = discord.utils.format_dt(now, style=style)
-        
-        msg = f'{msgf} **{stamp}**'
-        await ctx.response.send_message(msg)
-        
     @app_commands.command(name="info", description="Provides detailed information about user")
     async def info(self, ctx: discord.Interaction, user: discord.Member | discord.User | None = None):
         # first time creating an embed
