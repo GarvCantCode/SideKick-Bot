@@ -1,3 +1,5 @@
+import random
+
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -13,6 +15,12 @@ class Fun(commands.Cog):
     async def zalgo(self, ctx: discord.Interaction, text: app_commands.Range[str, 1, 250], intensity: app_commands.Range[int, 1, 10]):
         msg =  make_zalgo(text=text, intensity=intensity)
         await ctx.response.send_message(msg)
+        
+    @app_commands.command(name="toss", description="Tosses a coin")
+    async def toss(self, ctx: discord.Interaction):
+        flip = random.randint(1,2)
+        if flip == 1: await ctx.response.send_message("**Heads**")
+        else: await ctx.response.send_message("**Tails**")
     
     
 async def setup(bot: commands.Bot):

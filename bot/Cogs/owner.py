@@ -1,7 +1,8 @@
 import discord
-from bot.config import Configuration
 from discord import app_commands
 from discord.ext import commands
+
+from bot.config import Configuration
 
 
 class Owner(commands.Cog):
@@ -9,13 +10,13 @@ class Owner(commands.Cog):
         self.bot = bot
         
     @app_commands.command(name="reload", description="reload the desired cog")
-    async def reload(self, ctx: discord.Interaction, cog: str, user: discord.Member):
-        if user.id == int(Configuration.OWNER_ID):
+    async def reload(self, ctx: discord.Interaction, cog: str):
+        if ctx.user.id == int(Configuration.OWNER_ID):
             await ctx.response.defer()
             try:
                 await self.bot.reload_extension(f"bot.cogs.{cog}")
                 await ctx.followup.send(f"Cog **{cog}** reloaded successfully.")
-            except:
+            except commands.ExtensionError:
                 await ctx.followup.send("Failed to reload the cog")      
         
 async def setup(bot: commands.Bot):

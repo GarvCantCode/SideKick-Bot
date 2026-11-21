@@ -18,7 +18,7 @@ class DiscordTools(commands.Cog):
         minutes, seconds = divmod(remainder, 60)
         latency = round(self.bot.latency * 1000)
         
-        msg = f"Pong: **{latency} ms** · up **{days}d {hours}h {minutes}m {seconds}s**"
+        msg = f"**{latency} ms** · up **{days}d {hours}h {minutes}m {seconds}s**"
         await ctx.response.send_message(msg)
         
     @app_commands.command(name="info", description="Provides detailed information about user")
