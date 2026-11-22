@@ -24,7 +24,7 @@ class DiscordTools(commands.Cog):
         await ctx.response.send_message(msg)
         
     @app_commands.command(name="info", description="Provides information about user")
-    async def info(self, ctx: discord.Interaction, user: discord.Member | discord.User | None = None):
+    async def info(self, ctx: discord.Interaction, user: discord.Member | discord.User | None):
         embed = discord.Embed(title=user.display_name, color=discord.Colour.random())
         # first time creating an embed        
 
