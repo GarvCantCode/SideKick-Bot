@@ -21,15 +21,16 @@ class DiscordTools(commands.Cog):
         msg = f"**{latency} ms** · up **{days}d {hours}h {minutes}m {seconds}s**"
         await ctx.response.send_message(msg)
         
-    @app_commands.command(name="info", description="Provides detailed information about user")
+    @app_commands.command(name="info", description="Provides information about user")
     async def info(self, ctx: discord.Interaction, user: discord.Member | discord.User | None = None):
-        # first time creating an embed
         embed = discord.Embed(title=user.display_name, color=discord.Colour.random())
+        # first time creating an embed        
+
         embed.set_thumbnail(url=user.display_avatar)
         embed.add_field(name="Username", value=user.name)
         embed.add_field(name="ID",value=user.id)
         embed.add_field(name="Bot", value=user.bot)
-        embed.add_field(name="Creation Date", value=discord.utils.format_dt(user.created_at, "R"))
+        embed.add_field(name="Creation Date", value=discord.utils.format_dt(user.created_at, "R")) # change to whatever format you like
         
         await ctx.response.send_message(embed=embed)
         
