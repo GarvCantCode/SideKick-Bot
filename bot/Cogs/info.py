@@ -9,6 +9,8 @@ class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.launch_time = datetime.now(UTC)
+        self.menu = app_commands.ContextMenu(name="Message Info", callback=self.msg_info,)
+        self.bot.tree.add_command(self.menu)
 
     @app_commands.command(name="ping", description="Gives the bot latency")
     async def ping(self, ctx: discord.Interaction):
@@ -33,6 +35,21 @@ class DiscordTools(commands.Cog):
         embed.add_field(name="Creation Date", value=discord.utils.format_dt(user.created_at, "R")) # change to whatever format you like
         
         await ctx.response.send_message(embed=embed)
+    
+    async def msg_info(self, ctx: discord.Interaction, msg: discord.Message):
+        await ctx.response.defer()
+        
+        embed = discord.Embed(title="Message Info", color=discord.Color.random())
+        
+        embed.add_field(name="ID", value=msg.id)
+        embed.add_field(name="Sent Time", value=discord.utils.format_dt(msg.created_at, "R"))
+        embed.add_field(name="Edited Time", value=msg.edited_at or "Never")
+        embed.add_field(name="Jump Link",value=msg.jump_url)
+        embed.add_field(name="Attachments", value=len(msg.attachments))
+        embed.add_field(name="Embed Count", value=len(msg.embeds))
+        embed.add_field(name="Reply Target", value=msg.reply or "No")
+        
+        await ctx.followup.send(embed = embed)
         
         
         

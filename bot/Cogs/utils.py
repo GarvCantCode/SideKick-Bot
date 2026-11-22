@@ -27,7 +27,7 @@ class Utils(commands.Cog):
         
         file = discord.File(io.BytesIO(convert(mode, value).encode("utf-8")), filename=f"base64_{mode}d.txt")
         await ctx.followup.send(file=file, ephemeral=True)
-            
+
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Utils(bot))
