@@ -9,8 +9,6 @@ class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.launch_time = datetime.now(UTC)
-        self.menu = app_commands.ContextMenu(name="Message Info", callback=self.msg_info,)
-        self.bot.tree.add_command(self.menu)
 
     @app_commands.command(name="ping", description="Gives the bot latency")
     async def ping(self, ctx: discord.Interaction):
@@ -25,6 +23,8 @@ class DiscordTools(commands.Cog):
         
     @app_commands.command(name="info", description="Provides information about user")
     async def info(self, ctx: discord.Interaction, user: discord.Member | discord.User | None):
+        user = user or ctx.user
+        
         embed = discord.Embed(title=user.display_name, color=discord.Colour.random())
         # first time creating an embed        
 
@@ -36,9 +36,8 @@ class DiscordTools(commands.Cog):
         
         await ctx.response.send_message(embed=embed)
     
+    @app_commands.ContextMenu(name="Message Info")
     async def msg_info(self, ctx: discord.Interaction, msg: discord.Message):
-        await ctx.response.defer()
-        
         embed = discord.Embed(title="Message Info", color=discord.Color.random())
         
         embed.add_field(name="ID", value=msg.id)
@@ -47,9 +46,9 @@ class DiscordTools(commands.Cog):
         embed.add_field(name="Jump Link",value=msg.jump_url)
         embed.add_field(name="Attachments", value=len(msg.attachments))
         embed.add_field(name="Embed Count", value=len(msg.embeds))
-        embed.add_field(name="Reply Target", value=msg.reply or "No")
+        embed.add_field(name="Reply Target", value=msg.reference.message_id or "No")
         
-        await ctx.followup.send(embed = embed)
+        await ctx.response.send_message(embed = embed)
         
         
         
