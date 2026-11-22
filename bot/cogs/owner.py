@@ -13,7 +13,7 @@ class Owner(commands.Cog):
         await ctx.response.defer()
         
         await self.bot.reload_extension(f"bot.cogs.{cog}")
-        await self.tree.sync()
+        await self.bot.tree.sync()
         await ctx.followup.send(f"Cog **{cog}** reloaded successfully.")
                 
 async def setup(bot: commands.Bot):
