@@ -47,7 +47,6 @@ class DiscordTools(commands.Cog):
         embed.add_field(name="Jump Link",value=msg.jump_url)
         embed.add_field(name="Attachments", value=len(msg.attachments))
         embed.add_field(name="Embed Count", value=len(msg.embeds))
-        embed.add_field(name="Reply Target", value=msg.reference.message_id or "No")
         
         await ctx.response.send_message(embed = embed)
         
