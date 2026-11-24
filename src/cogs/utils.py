@@ -6,7 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from bot.lib.base64 import convert
+from src.helpers.base64 import convert
 
 
 class Utils(commands.Cog):
@@ -14,7 +14,7 @@ class Utils(commands.Cog):
         self.bot = bot
         
     @app_commands.command(name="timestamp", description="Converts timestamps into discord timestamp code")
-    async def timestamp(self, ctx: discord.Interaction,msgf: str, style: str):
+    async def timestamp(self, ctx: discord.Interaction,msgf: str, style: Literal["t", "T", "d", "D", "f", "F", "R"]):
         now =  datetime.now(UTC)
         stamp = discord.utils.format_dt(now, style=style)
         

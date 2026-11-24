@@ -70,13 +70,16 @@ class core(commands.Bot):
 
     async def setup_hook(self):
         self.logger.info(f"Discord.py: {discord.__version__} Python Version: {platform.python_version()}")
-        self.session= aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15))
+        self.session= aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) # used by bin files
         
         await self.load_cogs()
         
         if self.settings["sync_on_start"] == True:
-            sync = await self.tree.sync()
-            self.logger.info(f"Sync: {len(sync)}")
+            try:
+                sync = await self.tree.sync()
+                self.logger.info(f"Sync: {len(sync)}")
+            except discord.HTTPException:
+                self.logger.error("HTTP Exception")
             
     async def on_ready(self):
         self.logger.info(f"Ready as: {self.user} ID: {self.user.id}")

@@ -8,9 +8,11 @@ from discord.ext import commands
 class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.launch_time = datetime.now(UTC)
         self.menu = app_commands.ContextMenu(name="Message Info", callback=self.msg_info)
-        self.bot.tree.add_command(self.menu)
+        self.bot.tree.add_command(self.menu, override=True)
+        
+        if not hasattr(self.bot, "launch_time"):
+            self.bot.launch_time = datetime.now(UTC)
 
     @app_commands.command(name="ping", description="Gives the bot latency")
     async def ping(self, ctx: discord.Interaction):
@@ -43,7 +45,7 @@ class DiscordTools(commands.Cog):
         
         embed.add_field(name="ID", value=msg.id)
         embed.add_field(name="Sent Time", value=discord.utils.format_dt(msg.created_at, "R"))
-        embed.add_field(name="Edited Time", value=msg.edited_at or "Never")
+        embed.add_field(name="Edited Time", value=discord.utils.format_dt(msg.edited_at, "R") if msg.edited_at else "Never")
         embed.add_field(name="Jump Link",value=msg.jump_url)
         embed.add_field(name="Attachments", value=len(msg.attachments))
         embed.add_field(name="Embed Count", value=len(msg.embeds))
