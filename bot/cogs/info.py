@@ -9,6 +9,8 @@ class DiscordTools(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.launch_time = datetime.now(UTC)
+        self.menu = app_commands.ContextMenu(name="Message Info", callback=self.msg_info)
+        self.bot.tree.add_command(self.menu)
 
     @app_commands.command(name="ping", description="Gives the bot latency")
     async def ping(self, ctx: discord.Interaction):
@@ -36,7 +38,6 @@ class DiscordTools(commands.Cog):
         
         await ctx.response.send_message(embed=embed)
     
-    @app_commands.ContextMenu(name="Message Info")
     async def msg_info(self, ctx: discord.Interaction, msg: discord.Message):
         embed = discord.Embed(title="Message Info", color=discord.Color.random())
         
