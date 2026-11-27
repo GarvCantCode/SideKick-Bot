@@ -39,7 +39,6 @@ class Sidekicktree(app_commands.CommandTree):
 class core(commands.Bot):
     def __init__(self, settings, logger):
         super().__init__(
-            command_prefix=commands.when_mentioned,
             intents =discord.Intents.default(),
             help_command=None,
             tree_cls=Sidekicktree,
@@ -51,7 +50,7 @@ class core(commands.Bot):
         self.logger = logger
         self.session = None
         
-    async def load_cogs(self) -> None:
+    async def load_cogs(self):
         for i in COGS_DIR.glob("*.py"):
             if i.name.startswith("_"):
                 continue
