@@ -25,7 +25,7 @@ class Fun(commands.Cog):
     @app_commands.command(name="roll", description="Rolls a dice")
     async def roll(self, ctx: discord.Interaction):
         outcome = random.randint(1, 6)
-        await ctx.response.send(f"Its a **{outcome}**")
+        await ctx.response.send_message(f"Its a **{outcome}**")
     
 async def setup(bot: commands.Bot):
     await bot.add_cog(Fun(bot))
