@@ -39,6 +39,7 @@ class Sidekicktree(app_commands.CommandTree):
 class core(commands.Bot):
     def __init__(self, settings, logger):
         super().__init__(
+            command_prefix=commands.when_mentioned,
             intents =discord.Intents.default(),
             help_command=None,
             tree_cls=Sidekicktree,
