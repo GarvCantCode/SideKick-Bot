@@ -21,7 +21,11 @@ class Fun(commands.Cog):
         flip = random.randint(1,2)
         if flip == 1: await ctx.response.send_message("**Heads**")
         else: await ctx.response.send_message("**Tails**")
-    
+        
+    @app_commands.command(name="Roll", description="Rolls a dice")
+    async def roll(self, ctx: discord.Interaction):
+        outcome = random.randint(1, 6)
+        await ctx.response.send(f"Its a **{outcome}**")
     
 async def setup(bot: commands.Bot):
     await bot.add_cog(Fun(bot))
